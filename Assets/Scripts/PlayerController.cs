@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [Header("Animação")]
     private Animator anim;
     public bool isWalk;
+
+    [Header("Cameras")]
+    [SerializeField] private GameObject playerCamera;
 
     private void Start()
     {
@@ -85,6 +89,26 @@ public class PlayerController : MonoBehaviour
     private void AtaquePlayer()
     {
         anim.SetTrigger("triggerAtack");
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        switch(other.gameObject.tag)
+        {
+            case "CamTrigger":
+                playerCamera.SetActive(true);
+                break;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "CamTrigger":
+                playerCamera.SetActive(false);
+                break;
+        }
     }
 
 }
