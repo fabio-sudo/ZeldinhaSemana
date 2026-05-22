@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     [Header("Cameras")]
     [SerializeField] private GameObject playerCamera;
 
+    [Header("Particulas")]
+    [SerializeField] private ParticleSystem fxAtack;
+    private bool isAttacking;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -89,6 +93,8 @@ public class PlayerController : MonoBehaviour
     private void AtaquePlayer()
     {
         anim.SetTrigger("triggerAtack");
+        fxAtack.Emit(1);
+        isAttacking = true;
     }
 
 
