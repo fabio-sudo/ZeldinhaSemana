@@ -1,4 +1,3 @@
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +22,14 @@ public class PlayerController : MonoBehaviour
     [Header("Particulas")]
     [SerializeField] private ParticleSystem fxAtack;
     private bool isAttacking;
+
+    [Header("Attack")]
+    public Transform hitBox;
+    [Range(0.2f, 1f)]//Barra Deslizante
+    public float hitRange = 0.5f;
+    [SerializeField] private LayerMask hitLayer;
+    [SerializeField] private Collider[] hitInfo;
+    public int amountDmg;
 
     private void Start()
     {
@@ -89,14 +96,25 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
     private void AtaquePlayer()
     {
-        anim.SetTrigger("triggerAtack");
-        fxAtack.Emit(1);
-        isAttacking = true;
-    }
+        if (!isAttacking)
+        {
+            anim.SetTrigger("triggerAtack");
+            fxAtack.Emit(1);
+            isAttacking = true;
 
+            hitInfo = Physics.OverlapSphere
+                (hitBox.position, hitRange, hitLayer);
+
+            foreach (Collider hit in hitInfo)
+            {
+                
+                hit.gameObject.SendMessage
+                    ("GetHit", amountDmg, SendMessageOptions.DontRequireReceiver);
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -107,6 +125,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         switch (other.gameObject.tag)
@@ -117,4 +136,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void AtackIsDone()
+    {
+        isAttacking = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(hitBox.position, hitRange);
+    }
 }
