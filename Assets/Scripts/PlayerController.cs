@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public float hitRange = 0.5f;
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private Collider[] hitInfo;
-    public int amountDmg;
+    public int amountDmg = 25;//Aqui
 
     private void Start()
     {

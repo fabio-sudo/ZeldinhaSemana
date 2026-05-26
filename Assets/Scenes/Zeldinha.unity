@@ -407,6 +407,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8035681660144644490, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035681660144644490, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9111356269650961856, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -423,7 +431,10 @@ PrefabInstance:
       addedObject: {fileID: 1571359091}
     - targetCorrespondingSourceObject: {fileID: 7153141402127884706, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1571359092}
+      addedObject: {fileID: 1571359095}
+    - targetCorrespondingSourceObject: {fileID: 7153141402127884706, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1571359096}
   m_SourcePrefab: {fileID: 100100000, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
 --- !u!1001 &240933146
 PrefabInstance:
@@ -1993,7 +2004,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2005,7 +2016,12 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1571359092
+--- !u!95 &1571359093 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8035681660144644490, guid: a4ec793513574cd49719c4055b630e2b, type: 3}
+  m_PrefabInstance: {fileID: 201916338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1571359095
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2014,10 +2030,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1571359087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad1d3ffa841b324429632a58237a4242, type: 3}
+  m_Script: {fileID: 11500000, guid: e39727947cd2e8a44945918944ba710d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   player: {fileID: 6723812178702973386}
+  agent: {fileID: 1571359091}
+  anim: {fileID: 1571359093}
+  chaseDistance: 4
+  attackDistance: 2
+  attackInterval: 1.2
+  isDead: 0
+  isTakingHit: 0
+--- !u!114 &1571359096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571359087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463a1c1453554d043b9a5f958b414baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 100
+  currentHealth: 100
+  enemy: {fileID: 1571359095}
 --- !u!1001 &1624552894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4729,12 +4767,12 @@ MonoBehaviour:
   playerCamera: {fileID: 1003241069}
   fxAtack: {fileID: 1799484779}
   hitBox: {fileID: 461435525}
-  hitRange: 0.5
+  hitRange: 0.716
   hitLayer:
     serializedVersion: 2
     m_Bits: 64
   hitInfo: []
-  amountDmg: 0
+  amountDmg: 10
 --- !u!137 &6723812178716928210
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
